@@ -5,7 +5,7 @@ using KarizmaCon.Client.Interfaces;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Logging;
 
-namespace KarizmaCon.Client.SignalR
+namespace KarizmaCon.Client.Base
 {
     public class BaseConnection : IConnection
     {
