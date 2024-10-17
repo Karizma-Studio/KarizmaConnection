@@ -7,7 +7,7 @@ namespace KarizmaConnection.Server.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddKarizmaCon(this IServiceCollection services)
+    public static void AddKarizmaConnection(this IServiceCollection services)
     {
         services.AddSignalR();
 
