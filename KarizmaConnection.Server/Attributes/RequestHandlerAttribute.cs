@@ -1,4 +1,4 @@
-namespace KarizmaCon.Server.Attributes;
+namespace KarizmaConnection.Server.Attributes;
 
 [AttributeUsage(AttributeTargets.Class, Inherited = false)]
 public class RequestHandlerAttribute(string name) : Attribute

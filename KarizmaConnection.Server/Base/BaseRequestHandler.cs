@@ -1,7 +1,7 @@
-using KarizmaCon.Server.Interfaces;
+using KarizmaConnection.Server.Interfaces;
 using Microsoft.AspNetCore.SignalR;
 
-namespace KarizmaCon.Server.Base;
+namespace KarizmaConnection.Server.Base;
 
 public abstract class BaseRequestHandler : IRequestHandler
 {

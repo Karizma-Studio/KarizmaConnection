@@ -1,11 +1,11 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using KarizmaCon.Client.Interfaces;
+using KarizmaConnection.Client.Interfaces;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Logging;
 
-namespace KarizmaCon.Client.Base
+namespace KarizmaConnection.Client.Base
 {
     public class BaseConnection : IConnection
     {

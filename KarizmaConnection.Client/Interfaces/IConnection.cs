@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace KarizmaCon.Client.Interfaces
+namespace KarizmaConnection.Client.Interfaces
 {
     public interface IConnection : IAsyncDisposable
     {

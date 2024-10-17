@@ -1,4 +1,4 @@
-namespace KarizmaCon.Server.RequestHandler;
+namespace KarizmaConnection.Server.RequestHandler;
 
 internal sealed class RequestHandlerRegistry
 {

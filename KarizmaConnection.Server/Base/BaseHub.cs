@@ -1,9 +1,9 @@
 using System.Text.Json;
-using KarizmaCon.Server.Interfaces;
-using KarizmaCon.Server.RequestHandler;
+using KarizmaConnection.Server.Interfaces;
+using KarizmaConnection.Server.RequestHandler;
 using Microsoft.AspNetCore.SignalR;
 
-namespace KarizmaCon.Server.Base;
+namespace KarizmaConnection.Server.Base;
 
 internal class BaseHub(
     RequestHandlerRegistry requestHandlerRegistry,

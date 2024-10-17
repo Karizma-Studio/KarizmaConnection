@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KarizmaCon.Server", "KarizmaCon.Server\KarizmaCon.Server.csproj", "{BCA03363-175B-4CB2-9D60-4D71B523E09D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KarizmaConnection.Server", "KarizmaConnection.Server\KarizmaConnection.Server.csproj", "{BCA03363-175B-4CB2-9D60-4D71B523E09D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KarizmaCon.Client", "KarizmaCon.Client\KarizmaCon.Client.csproj", "{4B15F2C2-6F6F-4C61-9337-645FCDC711A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KarizmaConnection.Client", "KarizmaConnection.Client\KarizmaConnection.Client.csproj", "{4B15F2C2-6F6F-4C61-9337-645FCDC711A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

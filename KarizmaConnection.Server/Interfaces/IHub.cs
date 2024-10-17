@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace KarizmaCon.Server.Interfaces;
+namespace KarizmaConnection.Server.Interfaces;
 
 internal interface IHub
 {

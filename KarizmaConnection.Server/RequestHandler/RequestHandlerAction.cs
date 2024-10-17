@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace KarizmaCon.Server.RequestHandler;
+namespace KarizmaConnection.Server.RequestHandler;
 
 internal sealed class RequestHandlerAction(Type handlerType, MethodInfo actionMethodInfo)
 {

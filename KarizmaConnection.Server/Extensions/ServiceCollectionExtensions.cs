@@ -1,10 +1,9 @@
 using System.Reflection;
-using KarizmaCon.Server.Attributes;
-using KarizmaCon.Server.Base;
-using KarizmaCon.Server.Interfaces;
-using KarizmaCon.Server.RequestHandler;
+using KarizmaConnection.Server.Attributes;
+using KarizmaConnection.Server.Base;
+using KarizmaConnection.Server.RequestHandler;
 
-namespace KarizmaCon.Server.Extensions;
+namespace KarizmaConnection.Server.Extensions;
 
 public static class ServiceCollectionExtensions
 {
