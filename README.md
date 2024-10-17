@@ -24,10 +24,12 @@ dotnet add package KarizmaConnection
 1. Define your handlers using attributes:
    ```csharp
    [RequestHandler("user")]
-   public class UserHandler
+   public class UserHandler : BaseRequestHandler
    {
        [Action("login")]
-       public Task Login(string username, string password) { /* logic */ }
+       public Task Login(LoginDto loginData) {
+            /* logic */ 
+        }
    }
    ```
 
