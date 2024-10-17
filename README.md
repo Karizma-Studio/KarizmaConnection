@@ -23,7 +23,7 @@ dotnet add package KarizmaConnection
 
 1. Define your handlers using attributes:
    ```csharp
-   [Handler("user")]
+   [RequestHandler("user")]
    public class UserHandler
    {
        [Action("login")]
@@ -42,9 +42,9 @@ dotnet add package KarizmaConnection
    ```
 
 ### Attributes
-- **`[Handler]`**: Marks a class as a request handler.
+- **`[RequestHandler]`**: Marks a class as a request handler.
 - **`[Action]`**: Marks a method as an executable action.
-- **`[Event]`**: Marks a method for handling hub events (e.g., `onConnected`, `onDisconnected`).
+- **`[EventHandler]`**: Marks a method for handling hub events (e.g., `onConnected`, `onDisconnected`).
 
 ## Contributing
 
