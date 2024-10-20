@@ -1,0 +1,64 @@
+name: Publish NuGet Packages
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build-client:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Restore Client dependencies
+        run: dotnet restore KarizmaConnection.Client/KarizmaConnection.Client.csproj
+
+      - name: Build Client project
+        run: dotnet build KarizmaConnection.Client/KarizmaConnection.Client.csproj --configuration Release --no-restore
+
+      - name: Pack Client project
+        run: dotnet pack KarizmaConnection.Client/KarizmaConnection.Client.csproj --configuration Release --no-build --output ./nupkg
+
+      - name: Publish Client package to NuGet
+        run: dotnet nuget push "./nupkg/*.nupkg" --api-key ${{ secrets.CLIENT_NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+        env:
+          NUGET_API_KEY: ${{ secrets.CLIENT_NUGET_API_KEY }}
+
+  build-server:
+    runs-on: ubuntu-latest
+    needs: build-client
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore Server dependencies
+        run: dotnet restore KarizmaConnection.Server/KarizmaConnection.Server.csproj
+
+      - name: Build Server project
+        run: dotnet build KarizmaConnection.Server/KarizmaConnection.Server.csproj --configuration Release --no-restore
+
+      - name: Pack Server project
+        run: dotnet pack KarizmaConnection.Server/KarizmaConnection.Server.csproj --configuration Release --no-build --output ./nupkg
+
+      - name: Publish Server package to NuGet
+        run: dotnet nuget push "./nupkg/*.nupkg" --api-key ${{ secrets.SERVER_NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+        env:
+          NUGET_API_KEY: ${{ secrets.SERVER_NUGET_API_KEY }}
