@@ -6,7 +6,7 @@
         <IsPackable>true</IsPackable>
         <RootNamespace>KarizmaConnection.Client</RootNamespace>
         <PackageId>KarizmaConnection.Client</PackageId>
-        <Version>1.0.0</Version>
+        <Version>1.0.1</Version>
         <Authors>Karizma Studio</Authors>
         <Description>An abstraction on top of SignalR for .NET Core to manage connections more easily.</Description>
         <PackageTags>signalR, karizma, karizma-connection, ws</PackageTags>

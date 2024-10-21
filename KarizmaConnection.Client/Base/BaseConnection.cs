@@ -89,12 +89,15 @@ namespace KarizmaConnection.Client.Base
                 await Connect(lastConnectedUrl);
         }
 
-        private async Task Disconnect()
+        public async Task Disconnect()
         {
             if (hubConnection == null)
                 return;
-
+            
+            await hubConnection.StopAsync();
             await hubConnection.DisposeAsync();
+            
+            hubConnection = null;
         }
 
         public void On<T>(string address, Action<T> handler)
@@ -113,11 +116,6 @@ namespace KarizmaConnection.Client.Base
             await CheckConnection();
             var result = await hubConnection!.InvokeAsync<JsonElement>(MainHandlerMethodName, address, body);
             return result.Deserialize<T>()!;
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            await Disconnect();
         }
     }
 }

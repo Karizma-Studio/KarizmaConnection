@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace KarizmaConnection.Client.Interfaces
 {
-    public interface IConnection : IAsyncDisposable
+    public interface IConnection
     {
         public string? Id { get; }
 
@@ -12,7 +12,10 @@ namespace KarizmaConnection.Client.Interfaces
         public event Action<Exception?> OnDisconnected;
 
         public Task Connect(string url);
+        public Task Disconnect();
+
         public void On<T>(string address, Action<T> handler);
+        
         public Task Send(string address, object body);
         public Task<TResponse> Request<TResponse>(string address, object body);
     }
