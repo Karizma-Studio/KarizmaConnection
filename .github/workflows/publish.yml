@@ -32,7 +32,7 @@ jobs:
         run: dotnet pack KarizmaConnection.Client/KarizmaConnection.Client.csproj --configuration Release --no-build --output ./nupkg
 
       - name: Publish Client package to NuGet
-        run: dotnet nuget push "./nupkg/*.nupkg" --api-key ${{ secrets.CLIENT_NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push "./nupkg/*.nupkg" --api-key ${{ secrets.CLIENT_NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
         env:
           NUGET_API_KEY: ${{ secrets.CLIENT_NUGET_API_KEY }}
 
@@ -59,6 +59,6 @@ jobs:
         run: dotnet pack KarizmaConnection.Server/KarizmaConnection.Server.csproj --configuration Release --no-build --output ./nupkg
 
       - name: Publish Server package to NuGet
-        run: dotnet nuget push "./nupkg/*.nupkg" --api-key ${{ secrets.SERVER_NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push "./nupkg/*.nupkg" --api-key ${{ secrets.SERVER_NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
         env:
           NUGET_API_KEY: ${{ secrets.SERVER_NUGET_API_KEY }}
