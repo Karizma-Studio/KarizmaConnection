@@ -112,7 +112,7 @@ namespace KarizmaConnection.Client.Base
             _ = hubConnection!.InvokeAsync(MainHandlerMethodName, address, body);
         }
 
-        public async Task<Response<TResponse>> Request<TResponse>(string address, object body)
+        public async Task<Response<TResponse>> Request<TResponse>(string address, object? body = null)
         {
             await CheckConnection();
             var result = await hubConnection!.InvokeAsync<JsonElement>(MainHandlerMethodName, address, body);
