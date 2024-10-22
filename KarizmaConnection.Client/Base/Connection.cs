@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using KarizmaConnection.Client.Interfaces;
 using KarizmaConnection.Core.Base;
+using KarizmaConnection.Core.Constants;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Logging;
 
@@ -106,18 +107,18 @@ namespace KarizmaConnection.Client.Base
             hubConnection?.On(address, handler);
         }
 
-        public async Task Send(string address, object body)
+        public async Task Send(string address, params object[] body)
         {
             await CheckConnection();
             _ = hubConnection!.InvokeAsync(MainHandlerMethodName, address, body);
         }
 
-        public async Task<Response<TResponse>> Request<TResponse>(string address, object? body = null)
+        public async Task<Response<TResponse>> Request<TResponse>(string address, params object[]? body)
         {
             await CheckConnection();
             var result = await hubConnection!.InvokeAsync<JsonElement>(MainHandlerMethodName, address, body);
             return JsonSerializer.Deserialize<Response<TResponse>>(result.GetRawText(),
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+                JsonSerializerConstants.JsonSerializerOptions)!;
         }
     }
 }
