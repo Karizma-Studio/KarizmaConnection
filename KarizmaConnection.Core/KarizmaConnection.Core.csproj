@@ -3,6 +3,15 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
+        <RootNamespace>KarizmaConnection.Core</RootNamespace>
+        <PackageId>KarizmaConnection.Core</PackageId>
+        <Version>2.0.1</Version>
+        <Authors>Karizma Studio</Authors>
+        <Description>Core library for KarizmaConnection.</Description>
+        <PackageTags>SignalR, WebSocket, Server</PackageTags>
+        <RepositoryUrl>https://github.com/Karizma-Studio/KarizmaConnection</RepositoryUrl>
+        <Title>Karizma Connection Client</Title>
     </PropertyGroup>
 
     <ItemGroup>
