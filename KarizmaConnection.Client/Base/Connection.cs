@@ -17,6 +17,8 @@ namespace KarizmaConnection.Client.Base
         private HubConnection? hubConnection;
         private string? lastConnectedUrl;
 
+        public bool IsConnected => hubConnection is { State: HubConnectionState.Connected };
+
         public event Action OnConnected = delegate { };
         public event Action<Exception?> OnDisconnected = delegate { };
         public event Action<Exception?> OnReconnecting = delegate { };

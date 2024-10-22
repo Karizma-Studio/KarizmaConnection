@@ -12,6 +12,8 @@ namespace KarizmaConnection.Client.Interfaces
         public event Action<Exception?> OnReconnecting;
         public event Action<Exception?> OnDisconnected;
 
+        public bool IsConnected { get; }
+
         public Task Connect(string url);
         public Task Disconnect();
 
