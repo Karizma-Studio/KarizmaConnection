@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace KarizmaConnection.Server.Base;
 
-internal class BaseHub(
+internal class MainHub(
     RequestHandlerRegistry requestHandlerRegistry,
     IEnumerable<BaseEventHandler> eventHandlers,
     IServiceProvider serviceProvider) : Hub, IHub
@@ -34,7 +34,7 @@ internal class BaseHub(
         await base.OnDisconnectedAsync(exception);
     }
 
-    public async Task<BaseResponse<object?>> HandleAction(string address, JsonElement body)
+    public async Task<Response<object?>> HandleAction(string address, JsonElement body)
     {
         try
         {
@@ -50,24 +50,24 @@ internal class BaseHub(
             var result = handlerAction.ActionMethodInfo.Invoke(handlerInstance, [bodyObject]);
 
             if (result is not Task task)
-                return new BaseResponse<object?>(result);
+                return new Response<object?>(result);
 
             await task;
 
             if (handlerAction.ActionMethodInfo.ReturnType.IsGenericType
                 && handlerAction.ActionMethodInfo.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
-                return new BaseResponse<object?>(((dynamic)task).Result);
+                return new Response<object?>(((dynamic)task).Result);
         }
         catch (Exception ex)
         {
-            BaseError? error = null;
+            Error? error = null;
 
             if (ex.InnerException is ResponseException innerException)
-                error = new BaseError(innerException.Code, innerException.Message);
+                error = new Error(innerException.Code, innerException.Message);
 
-            return new BaseResponse<object?>(null, error ?? new BaseError(100, ex.Message)); //TODO Default error code
+            return new Response<object?>(null, error ?? new Error(100, ex.Message)); //TODO Default error code
         }
 
-        return new BaseResponse<object?>(null);
+        return new Response<object?>(null);
     }
 }

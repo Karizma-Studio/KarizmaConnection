@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace KarizmaConnection.Client.Base
 {
-    public class BaseConnection : IConnection
+    public class Connection : IConnection
     {
         public string? Id => hubConnection?.ConnectionId;
         private const string MainHandlerMethodName = "HandleAction";
@@ -22,7 +22,7 @@ namespace KarizmaConnection.Client.Base
 
         private readonly ILogger? logger;
 
-        public BaseConnection(ILogger? logger = null)
+        public Connection(ILogger? logger = null)
         {
             this.logger = logger;
         }
@@ -112,11 +112,11 @@ namespace KarizmaConnection.Client.Base
             _ = hubConnection!.InvokeAsync(MainHandlerMethodName, address, body);
         }
 
-        public async Task<BaseResponse<TResponse>> Request<TResponse>(string address, object body)
+        public async Task<Response<TResponse>> Request<TResponse>(string address, object body)
         {
             await CheckConnection();
             var result = await hubConnection!.InvokeAsync<JsonElement>(MainHandlerMethodName, address, body);
-            return JsonSerializer.Deserialize<BaseResponse<TResponse>>(result.GetRawText(),
+            return JsonSerializer.Deserialize<Response<TResponse>>(result.GetRawText(),
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
         }
     }

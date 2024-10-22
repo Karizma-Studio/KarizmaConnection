@@ -6,6 +6,6 @@ public static class WebApplicationExtensions
 {
     public static void MapKarizmaConnectionHub(this WebApplication webApplication, string mainPath)
     {
-        webApplication.MapHub<BaseHub>(mainPath);
+        webApplication.MapHub<MainHub>(mainPath);
     }
 }

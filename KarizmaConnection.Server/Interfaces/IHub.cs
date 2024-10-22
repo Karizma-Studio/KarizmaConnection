@@ -5,5 +5,5 @@ namespace KarizmaConnection.Server.Interfaces;
 
 internal interface IHub
 {
-    internal Task<BaseResponse<object?>> HandleAction(string address, JsonElement body);
+    internal Task<Response<object?>> HandleAction(string address, JsonElement body);
 }

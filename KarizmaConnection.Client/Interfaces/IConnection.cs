@@ -18,6 +18,6 @@ namespace KarizmaConnection.Client.Interfaces
         public void On<T>(string address, Action<T> handler);
 
         public Task Send(string address, object body);
-        public Task<BaseResponse<TResponse>> Request<TResponse>(string address, object body);
+        public Task<Response<TResponse>> Request<TResponse>(string address, object body);
     }
 }
