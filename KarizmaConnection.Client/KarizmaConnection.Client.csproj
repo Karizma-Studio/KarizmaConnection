@@ -17,4 +17,8 @@
         <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.10"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\KarizmaConnection.Core\KarizmaConnection.Core.csproj"/>
+    </ItemGroup>
+
 </Project>

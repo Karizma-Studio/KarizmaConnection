@@ -1,4 +1,6 @@
 using System.Text.Json;
+using KarizmaConnection.Core.Base;
+using KarizmaConnection.Core.Exceptions;
 using KarizmaConnection.Server.Interfaces;
 using KarizmaConnection.Server.RequestHandler;
 using Microsoft.AspNetCore.SignalR;
@@ -32,28 +34,40 @@ internal class BaseHub(
         await base.OnDisconnectedAsync(exception);
     }
 
-    public async Task<object?> HandleAction(string address, JsonElement body)
+    public async Task<BaseResponse<object?>> HandleAction(string address, JsonElement body)
     {
-        if (!requestHandlerRegistry.TryGetHandler(address, out var handlerAction))
-            throw new KeyNotFoundException($"Address '{address}' not found.");
+        try
+        {
+            if (!requestHandlerRegistry.TryGetHandler(address, out var handlerAction))
+                throw new KeyNotFoundException($"Address '{address}' not found.");
 
-        var parameterType = handlerAction.ActionMethodInfo.GetParameters()[0].ParameterType;
-        var bodyObject = body.Deserialize(parameterType);
+            var parameterType = handlerAction.ActionMethodInfo.GetParameters()[0].ParameterType;
+            var bodyObject = body.Deserialize(parameterType);
 
-        var handlerInstance = serviceProvider.GetRequiredService(handlerAction.HandlerType);
-        ((BaseRequestHandler)handlerInstance).SetContext(this);
+            var handlerInstance = serviceProvider.GetRequiredService(handlerAction.HandlerType);
+            ((BaseRequestHandler)handlerInstance).SetContext(this);
 
-        var result = handlerAction.ActionMethodInfo.Invoke(handlerInstance, [bodyObject]);
+            var result = handlerAction.ActionMethodInfo.Invoke(handlerInstance, [bodyObject]);
 
-        if (result is not Task task)
-            return result;
+            if (result is not Task task)
+                return new BaseResponse<object?>(result);
 
-        await task;
+            await task;
 
-        if (handlerAction.ActionMethodInfo.ReturnType.IsGenericType
-            && handlerAction.ActionMethodInfo.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
-            return ((dynamic)task).Result;
+            if (handlerAction.ActionMethodInfo.ReturnType.IsGenericType
+                && handlerAction.ActionMethodInfo.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+                return new BaseResponse<object?>(((dynamic)task).Result);
+        }
+        catch (Exception ex)
+        {
+            BaseError? error = null;
 
-        return null;
+            if (ex.InnerException is ResponseException innerException)
+                error = new BaseError(innerException.Code, innerException.Message);
+
+            return new BaseResponse<object?>(null, error ?? new BaseError(100, ex.Message)); //TODO Default error code
+        }
+
+        return new BaseResponse<object?>(null);
     }
 }

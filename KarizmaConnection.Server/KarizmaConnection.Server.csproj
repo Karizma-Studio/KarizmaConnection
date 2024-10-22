@@ -14,4 +14,8 @@
         <RepositoryUrl>https://github.com/Karizma-Studio/KarizmaConnection</RepositoryUrl>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\KarizmaConnection.Core\KarizmaConnection.Core.csproj"/>
+    </ItemGroup>
+
 </Project>

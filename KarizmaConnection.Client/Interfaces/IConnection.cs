@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using KarizmaConnection.Core.Base;
 
 namespace KarizmaConnection.Client.Interfaces
 {
@@ -15,8 +16,8 @@ namespace KarizmaConnection.Client.Interfaces
         public Task Disconnect();
 
         public void On<T>(string address, Action<T> handler);
-        
+
         public Task Send(string address, object body);
-        public Task<TResponse> Request<TResponse>(string address, object body);
+        public Task<BaseResponse<TResponse>> Request<TResponse>(string address, object body);
     }
 }

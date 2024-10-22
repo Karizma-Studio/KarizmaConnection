@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KarizmaConnection.Server", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KarizmaConnection.Client", "KarizmaConnection.Client\KarizmaConnection.Client.csproj", "{4B15F2C2-6F6F-4C61-9337-645FCDC711A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KarizmaConnection.Core", "KarizmaConnection.Core\KarizmaConnection.Core.csproj", "{9AAF0D9E-FE51-4B75-B678-CE303F916901}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{4B15F2C2-6F6F-4C61-9337-645FCDC711A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B15F2C2-6F6F-4C61-9337-645FCDC711A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B15F2C2-6F6F-4C61-9337-645FCDC711A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AAF0D9E-FE51-4B75-B678-CE303F916901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AAF0D9E-FE51-4B75-B678-CE303F916901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AAF0D9E-FE51-4B75-B678-CE303F916901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AAF0D9E-FE51-4B75-B678-CE303F916901}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
