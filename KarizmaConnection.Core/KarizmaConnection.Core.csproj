@@ -12,10 +12,18 @@
         <PackageTags>SignalR, WebSocket, Server</PackageTags>
         <RepositoryUrl>https://github.com/Karizma-Studio/KarizmaConnection</RepositoryUrl>
         <Title>Karizma Connection Client</Title>
+        <PackageIcon>logo.png</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="System.Text.Json" Version="8.0.5"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="logo.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
     </ItemGroup>
 
 </Project>
