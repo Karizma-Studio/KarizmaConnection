@@ -7,7 +7,7 @@
         <PackageId>KarizmaConnection.Server</PackageId>
         <IsPackable>true</IsPackable>
         <AssemblyName>KarizmaConnection.Server</AssemblyName>
-        <Version>2.2.0</Version>
+        <Version>3.0.0</Version>
         <Authors>Karizma Studio</Authors>
         <Description>Server library for KarizmaConnection.</Description>
         <PackageTags>SignalR, WebSocket, Server</PackageTags>
