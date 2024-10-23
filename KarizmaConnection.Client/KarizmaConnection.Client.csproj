@@ -13,7 +13,8 @@
         <RepositoryUrl>https://github.com/Karizma-Studio/KarizmaConnection</RepositoryUrl>
         <Title>Karizma Connection Client</Title>
         <PackageReleaseNotes>v2.1.3
-- Minor Improvements</PackageReleaseNotes>
+            - Minor Improvements
+        </PackageReleaseNotes>
         <PackageIcon>logo.png</PackageIcon>
     </PropertyGroup>
 
@@ -26,10 +27,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="logo.png">
-        <Pack>True</Pack>
-        <PackagePath></PackagePath>
-      </None>
+        <None Update="logo.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
     </ItemGroup>
 
 </Project>

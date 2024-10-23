@@ -4,6 +4,7 @@ using KarizmaConnection.Core.Constants;
 using KarizmaConnection.Core.Exceptions;
 using KarizmaConnection.Server.Interfaces;
 using KarizmaConnection.Server.RequestHandler;
+using KarizmaConnection.Server.Users;
 using Microsoft.AspNetCore.SignalR;
 
 namespace KarizmaConnection.Server.Base;
@@ -11,15 +12,19 @@ namespace KarizmaConnection.Server.Base;
 internal class MainHub(
     ILogger<MainHub> logger,
     RequestHandlerRegistry requestHandlerRegistry,
+    UserRegistry userRegistry,
     Options options,
     IEnumerable<BaseEventHandler> eventHandlers,
     IServiceProvider serviceProvider) : Hub, IHub
 {
     public override async Task OnConnectedAsync()
     {
+        var user = new User();
+        userRegistry.Add(Context.ConnectionId, user);
+
         foreach (var handler in eventHandlers)
         {
-            handler.SetContext(this);
+            handler.Initialize(this, user);
             await handler.OnConnected();
         }
 
@@ -28,12 +33,15 @@ internal class MainHub(
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
+        var user = userRegistry.Get(Context.ConnectionId);
+
         foreach (var handler in eventHandlers)
         {
-            handler.SetContext(this);
+            handler.Initialize(this, user);
             await handler.OnDisconnected(exception);
         }
 
+        userRegistry.Remove(Context.ConnectionId);
         await base.OnDisconnectedAsync(exception);
     }
 
@@ -44,9 +52,14 @@ internal class MainHub(
             if (!requestHandlerRegistry.TryGetHandler(address, out var handlerAction))
                 throw new KeyNotFoundException($"Address '{address}' not found.");
 
+            //Check user authorization
+            var user = userRegistry.Get(Context.ConnectionId);
+            if (handlerAction.NeedAuthorizedUser && !user.IsAuthorized)
+                throw new Exception("Access denied.");
+
             //Get Handler instance and set context
             var handlerInstance = serviceProvider.GetRequiredService(handlerAction.HandlerType);
-            ((BaseRequestHandler)handlerInstance).SetContext(this);
+            ((BaseRequestHandler)handlerInstance).Initialize(this, user);
 
             //Initialize action input parameters
             List<object?> actionInputParams = [];

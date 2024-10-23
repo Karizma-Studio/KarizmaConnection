@@ -1,7 +1,8 @@
 namespace KarizmaConnection.Server.Attributes;
 
 [AttributeUsage(AttributeTargets.Method, Inherited = false)]
-public class ActionAttribute(string name) : Attribute
+public class ActionAttribute(string route, bool needAuthorizedUser = true) : Attribute
 {
-    public string Name { get; } = name;
+    public string Route { get; } = route;
+    public bool NeedAuthorizedUser { get; } = needAuthorizedUser;
 }

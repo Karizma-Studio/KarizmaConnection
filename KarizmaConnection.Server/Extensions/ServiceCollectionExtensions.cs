@@ -2,6 +2,7 @@ using System.Reflection;
 using KarizmaConnection.Server.Attributes;
 using KarizmaConnection.Server.Base;
 using KarizmaConnection.Server.RequestHandler;
+using KarizmaConnection.Server.Users;
 
 namespace KarizmaConnection.Server.Extensions;
 
@@ -17,6 +18,8 @@ public static class ServiceCollectionExtensions
 
         hubOptions ??= new Options(500);
         services.AddSingleton(hubOptions);
+
+        services.AddSingleton<UserRegistry>();
     }
 
     private static void AddRequestHandlers(this IServiceCollection services)
@@ -42,9 +45,10 @@ public static class ServiceCollectionExtensions
                 {
                     var actionAttribute = method.GetCustomAttribute<ActionAttribute>();
 
-                    var address = $"{handlerAttribute!.Name}/{actionAttribute!.Name}".ToLowerInvariant();
+                    var address = $"{handlerAttribute!.Route}/{actionAttribute!.Route}".ToLowerInvariant();
 
-                    handlerRegistry.AddHandler(address, new RequestHandlerAction(handlerType, method));
+                    handlerRegistry.AddHandler(address,
+                        new RequestHandlerAction(handlerType, method, actionAttribute.NeedAuthorizedUser));
                 }
             }
         }

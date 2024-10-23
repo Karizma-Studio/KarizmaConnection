@@ -1,7 +1,7 @@
 namespace KarizmaConnection.Server.Attributes;
 
 [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-public class RequestHandlerAttribute(string name) : Attribute
+public class RequestHandlerAttribute(string route) : Attribute
 {
-    public string Name { get; } = name;
+    public string Route { get; } = route;
 }
