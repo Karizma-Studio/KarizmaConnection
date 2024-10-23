@@ -12,12 +12,12 @@ namespace KarizmaConnection.Client.Base
     public class Connection : IConnection
     {
         public string? Id => hubConnection?.ConnectionId;
+        public bool IsConnected => hubConnection is { State: HubConnectionState.Connected };
+
         private const string MainHandlerMethodName = "HandleAction";
 
         private HubConnection? hubConnection;
         private string? lastConnectedUrl;
-
-        public bool IsConnected => hubConnection is { State: HubConnectionState.Connected };
 
         public event Action OnConnected = delegate { };
         public event Action<Exception?> OnDisconnected = delegate { };
@@ -58,7 +58,6 @@ namespace KarizmaConnection.Client.Base
             connection.Reconnecting += HubConnectionOnReconnecting;
             connection.Reconnected += HubConnectionOnReconnected;
             connection.Closed += HubConnectionOnClosed;
-
 
             return connection;
         }
@@ -112,7 +111,7 @@ namespace KarizmaConnection.Client.Base
         public async Task Send(string address, params object[] body)
         {
             await CheckConnection();
-            _ = hubConnection!.InvokeAsync(MainHandlerMethodName, address, body);
+            await hubConnection!.InvokeAsync(MainHandlerMethodName, address, body);
         }
 
         public async Task<Response<TResponse>> Request<TResponse>(string address, params object[]? body)

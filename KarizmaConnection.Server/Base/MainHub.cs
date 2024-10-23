@@ -72,8 +72,8 @@ internal class MainHub(
             logger.LogCritical(ex, "MainHub HandleAction Error.");
             Error? error = null;
 
-            if (ex.InnerException is ResponseException innerException)
-                error = new Error(innerException.Code, innerException.Message);
+            if (ex.InnerException is ResponseException responseException)
+                error = new Error(responseException.Code, responseException.Message);
 
             return new Response<object?>(null, error ?? new Error(100, ex.Message)); //TODO Default error code
         }

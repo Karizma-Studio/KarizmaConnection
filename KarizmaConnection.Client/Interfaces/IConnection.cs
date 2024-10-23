@@ -7,12 +7,11 @@ namespace KarizmaConnection.Client.Interfaces
     public interface IConnection
     {
         public string? Id { get; }
+        public bool IsConnected { get; }
 
         public event Action OnConnected;
         public event Action<Exception?> OnReconnecting;
         public event Action<Exception?> OnDisconnected;
-
-        public bool IsConnected { get; }
 
         public Task Connect(string url);
         public Task Disconnect();
