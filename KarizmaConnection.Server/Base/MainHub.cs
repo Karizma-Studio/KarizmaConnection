@@ -11,6 +11,7 @@ namespace KarizmaConnection.Server.Base;
 internal class MainHub(
     ILogger<MainHub> logger,
     RequestHandlerRegistry requestHandlerRegistry,
+    Options options,
     IEnumerable<BaseEventHandler> eventHandlers,
     IServiceProvider serviceProvider) : Hub, IHub
 {
@@ -75,7 +76,7 @@ internal class MainHub(
             if (ex.InnerException is ResponseException responseException)
                 error = new Error(responseException.Code, responseException.Message);
 
-            return new Response<object?>(null, error ?? new Error(100, ex.Message)); //TODO Default error code
+            return new Response<object?>(null, error ?? new Error(options.DefaultHubResponseErrorCode, ex.Message));
         }
 
         return new Response<object?>(null);

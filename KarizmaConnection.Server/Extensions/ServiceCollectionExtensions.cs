@@ -7,12 +7,16 @@ namespace KarizmaConnection.Server.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddKarizmaConnection(this IServiceCollection services)
+    public static void AddKarizmaConnection(this IServiceCollection services,
+        Options? hubOptions = null)
     {
         services.AddSignalR();
 
         services.AddEventHandlers();
         services.AddRequestHandlers();
+
+        hubOptions ??= new Options(500);
+        services.AddSingleton(hubOptions);
     }
 
     private static void AddRequestHandlers(this IServiceCollection services)
