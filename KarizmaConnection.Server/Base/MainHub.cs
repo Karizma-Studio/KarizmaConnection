@@ -2,6 +2,7 @@ using System.Text.Json;
 using KarizmaConnection.Core.Base;
 using KarizmaConnection.Core.Constants;
 using KarizmaConnection.Core.Exceptions;
+using KarizmaConnection.Server.Extensions;
 using KarizmaConnection.Server.Interfaces;
 using KarizmaConnection.Server.RequestHandler;
 using KarizmaConnection.Server.Users;
@@ -77,8 +78,7 @@ internal class MainHub(
 
             await task;
 
-            if (handlerAction.ActionMethodInfo.ReturnType.IsGenericType
-                && handlerAction.ActionMethodInfo.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+            if (handlerAction.ActionMethodInfo.ReturnType.IsGenericTaskType())
                 return new Response<object?>(((dynamic)task).Result);
         }
         catch (Exception ex)

@@ -48,7 +48,7 @@ public static class ServiceCollectionExtensions
                     var address = $"{handlerAttribute!.Route}/{actionAttribute!.Route}".ToLowerInvariant();
 
                     handlerRegistry.AddHandler(address,
-                        new RequestHandlerAction(handlerType, method, actionAttribute.NeedAuthorizedUser));
+                        new RequestHandlerAction(address, handlerType, method, actionAttribute.NeedAuthorizedUser));
                 }
             }
         }
