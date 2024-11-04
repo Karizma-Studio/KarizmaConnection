@@ -1,17 +1,17 @@
 namespace KarizmaConnection.Server.RequestHandler;
 
-internal sealed class RequestHandlerRegistry
+internal static class RequestHandlerRegistry
 {
-    private readonly Dictionary<string, RequestHandlerAction> handlerActions = new();
-    internal List<RequestHandlerAction> GetAllHandlerActions => handlerActions.Values.ToList();
+    private static readonly Dictionary<string, RequestHandlerAction> HandlerActions = new();
+    internal static List<RequestHandlerAction> GetAllHandlerActions => HandlerActions.Values.ToList();
 
-    internal void AddHandler(string address, RequestHandlerAction requestHandlerAction)
+    internal static void AddHandler(string address, RequestHandlerAction requestHandlerAction)
     {
-        handlerActions.Add(address.ToLowerInvariant(), requestHandlerAction);
+        HandlerActions.Add(address.ToLowerInvariant(), requestHandlerAction);
     }
 
-    internal bool TryGetHandler(string address, out RequestHandlerAction requestHandlerAction)
+    internal static bool TryGetHandler(string address, out RequestHandlerAction requestHandlerAction)
     {
-        return handlerActions.TryGetValue(address.ToLowerInvariant(), out requestHandlerAction!);
+        return HandlerActions.TryGetValue(address.ToLowerInvariant(), out requestHandlerAction!);
     }
 }

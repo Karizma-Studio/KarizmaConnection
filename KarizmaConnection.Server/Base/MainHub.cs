@@ -2,30 +2,28 @@ using System.Text.Json;
 using KarizmaConnection.Core.Base;
 using KarizmaConnection.Core.Constants;
 using KarizmaConnection.Core.Exceptions;
+using KarizmaConnection.Server.Connection;
 using KarizmaConnection.Server.Extensions;
 using KarizmaConnection.Server.Interfaces;
 using KarizmaConnection.Server.RequestHandler;
-using KarizmaConnection.Server.Users;
 using Microsoft.AspNetCore.SignalR;
 
 namespace KarizmaConnection.Server.Base;
 
 internal class MainHub(
     ILogger<MainHub> logger,
-    RequestHandlerRegistry requestHandlerRegistry,
-    UserRegistry userRegistry,
     Options options,
     IEnumerable<BaseEventHandler> eventHandlers,
     IServiceProvider serviceProvider) : Hub, IHub
 {
     public override async Task OnConnectedAsync()
     {
-        var user = new User();
-        userRegistry.Add(Context.ConnectionId, user);
+        var connectionContext = new ConnectionContext(Context.ConnectionId);
+        ConnectionContextRegistry.AddConnectionId(connectionContext);
 
         foreach (var handler in eventHandlers)
         {
-            handler.Initialize(this, user);
+            handler.Initialize(this, connectionContext);
             await handler.OnConnected();
         }
 
@@ -34,15 +32,16 @@ internal class MainHub(
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        var user = userRegistry.Get(Context.ConnectionId);
+        var connectionContext = ConnectionContextRegistry.GetContextWithConnectionId(Context.ConnectionId);
 
         foreach (var handler in eventHandlers)
         {
-            handler.Initialize(this, user);
+            handler.Initialize(this, connectionContext);
             await handler.OnDisconnected(exception);
         }
 
-        userRegistry.Remove(Context.ConnectionId);
+        ConnectionContextRegistry.RemoveConnectionId(Context.ConnectionId);
+
         await base.OnDisconnectedAsync(exception);
     }
 
@@ -50,11 +49,11 @@ internal class MainHub(
     {
         try
         {
-            if (!requestHandlerRegistry.TryGetHandler(address, out var handlerAction))
+            if (!RequestHandlerRegistry.TryGetHandler(address, out var handlerAction))
                 throw new KeyNotFoundException($"Address '{address}' not found.");
 
             //Check user authorization
-            var user = userRegistry.Get(Context.ConnectionId);
+            var user = ConnectionContextRegistry.GetContextWithConnectionId(Context.ConnectionId);
             if (handlerAction.NeedAuthorizedUser && !user.IsAuthorized)
                 throw new Exception("Access denied.");
 
@@ -89,7 +88,11 @@ internal class MainHub(
             if (ex.InnerException is ResponseException responseException)
                 error = new Error(responseException.Code, responseException.Message);
 
-            return new Response<object?>(null, error ?? new Error(options.DefaultHubResponseErrorCode, ex.Message));
+            var message = options.ReturnStacktraceOnError
+                ? $"{ex.Message} \n {ex.StackTrace}"
+                : "Internal Server Error";
+
+            return new Response<object?>(null, error ?? new Error(options.DefaultHubResponseErrorCode, message));
         }
 
         return new Response<object?>(null);

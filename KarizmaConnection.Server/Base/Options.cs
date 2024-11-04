@@ -1,6 +1,7 @@
 namespace KarizmaConnection.Server.Base;
 
-public class Options(int defaultHubResponseErrorCode)
+public class Options
 {
-    public int DefaultHubResponseErrorCode { get; private set; } = defaultHubResponseErrorCode;
+    public int DefaultHubResponseErrorCode { get; set; } = 500;
+    public bool ReturnStacktraceOnError { get; set; } = true;
 }

@@ -1,5 +1,5 @@
+using KarizmaConnection.Server.Connection;
 using KarizmaConnection.Server.Interfaces;
-using KarizmaConnection.Server.Users;
 using Microsoft.AspNetCore.SignalR;
 
 namespace KarizmaConnection.Server.Base;
@@ -7,13 +7,12 @@ namespace KarizmaConnection.Server.Base;
 public abstract class BaseRequestHandler : IRequestHandler
 {
     private Hub? hub;
-    public string ConnectionId => hub!.Context.ConnectionId;
-    public User User { get; internal set; } = null!;
+    public ConnectionContext ConnectionContext { get; private set; } = null!;
 
-    internal void Initialize(Hub contextHub, User user)
+    internal void Initialize(Hub contextHub, ConnectionContext connectionContext)
     {
         hub = contextHub;
-        User = user;
+        ConnectionContext = connectionContext;
     }
 
     public async Task SendAll(string address, object body)
@@ -24,5 +23,15 @@ public abstract class BaseRequestHandler : IRequestHandler
     public async Task Send(string connectionId, string address, object body)
     {
         await hub!.Clients.Client(connectionId).SendAsync(address, body);
+    }
+
+    public ConnectionContext? GetConnectionContextWithConnectionId(string connectionId)
+    {
+        return ConnectionContextRegistry.GetContextWithConnectionId(connectionId);
+    }
+
+    public ConnectionContext? GetConnectionContextWithAuthorizationId(object authorizationId)
+    {
+        return ConnectionContextRegistry.GetContextWithAuthorizationId(authorizationId);
     }
 }

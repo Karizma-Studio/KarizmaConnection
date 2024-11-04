@@ -2,7 +2,6 @@ using System.Reflection;
 using KarizmaConnection.Server.Attributes;
 using KarizmaConnection.Server.Base;
 using KarizmaConnection.Server.RequestHandler;
-using KarizmaConnection.Server.Users;
 
 namespace KarizmaConnection.Server.Extensions;
 
@@ -16,16 +15,13 @@ public static class ServiceCollectionExtensions
         services.AddEventHandlers();
         services.AddRequestHandlers();
 
-        hubOptions ??= new Options(500);
+        hubOptions ??= new Options();
         services.AddSingleton(hubOptions);
-
-        services.AddSingleton<UserRegistry>();
     }
 
     private static void AddRequestHandlers(this IServiceCollection services)
     {
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-        var handlerRegistry = new RequestHandlerRegistry();
 
         foreach (var assembly in assemblies)
         {
@@ -47,13 +43,11 @@ public static class ServiceCollectionExtensions
 
                     var address = $"{handlerAttribute!.Route}/{actionAttribute!.Route}".ToLowerInvariant();
 
-                    handlerRegistry.AddHandler(address,
+                    RequestHandlerRegistry.AddHandler(address,
                         new RequestHandlerAction(address, handlerType, method, actionAttribute.NeedAuthorizedUser));
                 }
             }
         }
-
-        services.AddSingleton(handlerRegistry);
     }
 
 

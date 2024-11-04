@@ -8,7 +8,7 @@ namespace KarizmaConnection.Core.Exceptions
         public int Code { get; private set; }
         public override string? Message { get; }
 
-        public ResponseException(int code, string? message) : base(message)
+        public ResponseException(int code, string? message = null) : base(message)
         {
             Code = code;
             Message = message;

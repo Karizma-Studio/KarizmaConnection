@@ -5,11 +5,11 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace KarizmaConnection.Server.Swagger;
 
-internal class SwaggerDocumentationFilter(RequestHandlerRegistry requestHandlerRegistry) : IDocumentFilter
+internal class SwaggerDocumentationFilter() : IDocumentFilter
 {
     public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
     {
-        var handlerActions = requestHandlerRegistry.GetAllHandlerActions;
+        var handlerActions = RequestHandlerRegistry.GetAllHandlerActions;
 
         foreach (var handlerAction in handlerActions)
         {
