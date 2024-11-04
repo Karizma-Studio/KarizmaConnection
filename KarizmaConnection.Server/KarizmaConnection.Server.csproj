@@ -7,7 +7,7 @@
         <PackageId>KarizmaConnection.Server</PackageId>
         <IsPackable>true</IsPackable>
         <AssemblyName>KarizmaConnection.Server</AssemblyName>
-        <Version>3.1.0</Version>
+        <Version>3.2.0</Version>
         <Authors>Karizma Studio</Authors>
         <Description>Server library for KarizmaConnection.</Description>
         <PackageTags>SignalR, WebSocket, Server</PackageTags>
@@ -16,7 +16,9 @@
         <PackageIcon>logo.png</PackageIcon>
         <PackageReleaseNotes>3.1.0
             - Add Swagger documentation support
-        </PackageReleaseNotes>
+
+3.2.0
+    - User Authorization mechanism</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
