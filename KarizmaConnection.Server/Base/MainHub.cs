@@ -36,7 +36,7 @@ internal class MainHub(
 
         foreach (var handler in eventHandlers)
         {
-            handler.Initialize(this, connectionContext);
+            handler.Initialize(this, connectionContext!);
             await handler.OnDisconnected(exception);
         }
 
@@ -54,7 +54,7 @@ internal class MainHub(
 
             //Check user authorization
             var user = ConnectionContextRegistry.GetContextWithConnectionId(Context.ConnectionId);
-            if (handlerAction.NeedAuthorizedUser && !user.IsAuthorized)
+            if (user == null || handlerAction.NeedAuthorizedUser && !user.IsAuthorized)
                 throw new Exception("Access denied.");
 
             //Get Handler instance and set context
