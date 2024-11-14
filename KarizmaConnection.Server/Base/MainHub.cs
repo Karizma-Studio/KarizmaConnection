@@ -83,16 +83,21 @@ internal class MainHub(
         catch (Exception ex)
         {
             logger.LogCritical(ex, "MainHub HandleAction Error.");
-            Error? error = null;
 
-            if (ex.InnerException is ResponseException responseException)
-                error = new Error(responseException.Code, responseException.Message);
+            var innerException = ex.InnerException;
+            while (innerException != null)
+            {
+                if (innerException is ResponseException responseException)
+                    return new Response<object?>(null, new Error(responseException));
+               
+                innerException = innerException.InnerException;
+            }
 
-            var message = options.ReturnStacktraceOnError
+            var message = options.ReturnStackTraceOnError
                 ? $"{ex.Message} \n {ex.StackTrace}"
                 : "Internal Server Error";
 
-            return new Response<object?>(null, error ?? new Error(options.DefaultHubResponseErrorCode, message));
+            return new Response<object?>(null, new Error(options.DefaultHubResponseErrorCode, message));
         }
 
         return new Response<object?>(null);

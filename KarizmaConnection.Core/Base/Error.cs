@@ -1,3 +1,5 @@
+using KarizmaConnection.Core.Exceptions;
+
 namespace KarizmaConnection.Core.Base
 {
     public class Error
@@ -9,6 +11,12 @@ namespace KarizmaConnection.Core.Base
         {
             Code = code;
             Message = message;
+        }
+
+        public Error(ResponseException responseException)
+        {
+            Code = responseException.Code;
+            Message = responseException.Message;
         }
     }
 }
