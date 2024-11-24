@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace KarizmaConnection.Core.Constants
+namespace KarizmaPlatform.Connection.Core.Constants
 {
     public static class JsonSerializerConstants
     {

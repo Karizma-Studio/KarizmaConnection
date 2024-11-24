@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace KarizmaConnection.Core.Base
+namespace KarizmaPlatform.Connection.Core.Base
 {
     public class Vault
     {

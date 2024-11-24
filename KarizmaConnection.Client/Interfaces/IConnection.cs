@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using KarizmaConnection.Core.Base;
+using KarizmaPlatform.Connection.Core.Base;
 
-namespace KarizmaConnection.Client.Interfaces
+namespace KarizmaPlatform.Connection.Client.Interfaces
 {
     public interface IConnection
     {

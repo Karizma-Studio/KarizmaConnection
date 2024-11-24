@@ -1,4 +1,4 @@
-namespace KarizmaConnection.Server.Connection;
+namespace KarizmaPlatform.Connection.Server.Connection;
 
 internal static class ConnectionContextRegistry
 {

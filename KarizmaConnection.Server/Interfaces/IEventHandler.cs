@@ -1,4 +1,4 @@
-namespace KarizmaConnection.Server.Interfaces;
+namespace KarizmaPlatform.Connection.Server.Interfaces;
 
 public interface IEventHandler
 {

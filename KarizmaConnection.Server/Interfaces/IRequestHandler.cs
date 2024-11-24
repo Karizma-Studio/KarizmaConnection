@@ -1,6 +1,6 @@
-using KarizmaConnection.Server.Connection;
+using KarizmaPlatform.Connection.Server.Connection;
 
-namespace KarizmaConnection.Server.Interfaces;
+namespace KarizmaPlatform.Connection.Server.Interfaces;
 
 internal interface IRequestHandler
 {

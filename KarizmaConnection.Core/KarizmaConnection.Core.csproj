@@ -4,7 +4,7 @@
         <TargetFramework>netstandard2.1</TargetFramework>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
-        <RootNamespace>KarizmaConnection.Core</RootNamespace>
+        <RootNamespace>KarizmaPlatform.Connection.Core</RootNamespace>
         <PackageId>KarizmaConnection.Core</PackageId>
         <Version>3.2.2</Version>
         <Authors>Karizma Studio</Authors>

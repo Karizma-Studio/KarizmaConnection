@@ -1,6 +1,6 @@
-using KarizmaConnection.Server.Base;
+using KarizmaPlatform.Connection.Server.Base;
 
-namespace KarizmaConnection.Server.Extensions;
+namespace KarizmaPlatform.Connection.Server.Extensions;
 
 public static class WebApplicationExtensions
 {

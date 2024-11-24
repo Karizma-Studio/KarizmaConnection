@@ -1,6 +1,6 @@
-using KarizmaConnection.Server.Interfaces;
+using KarizmaPlatform.Connection.Server.Interfaces;
 
-namespace KarizmaConnection.Server.Base;
+namespace KarizmaPlatform.Connection.Server.Base;
 
 public abstract class BaseEventHandler : BaseRequestHandler, IEventHandler
 {

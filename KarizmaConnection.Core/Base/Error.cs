@@ -1,6 +1,6 @@
-using KarizmaConnection.Core.Exceptions;
+using KarizmaPlatform.Connection.Core.Exceptions;
 
-namespace KarizmaConnection.Core.Base
+namespace KarizmaPlatform.Connection.Core.Base
 {
     public class Error
     {

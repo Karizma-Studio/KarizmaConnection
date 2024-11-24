@@ -1,4 +1,4 @@
-namespace KarizmaConnection.Server.Attributes;
+namespace KarizmaPlatform.Connection.Server.Attributes;
 
 [AttributeUsage(AttributeTargets.Method, Inherited = false)]
 public class ActionAttribute(string route, bool needAuthorizedUser = true) : Attribute

@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace KarizmaConnection.Server.RequestHandler;
+namespace KarizmaPlatform.Connection.Server.RequestHandler;
 
 internal sealed class RequestHandlerAction(
     string address,

@@ -1,4 +1,4 @@
-namespace KarizmaConnection.Server.Base;
+namespace KarizmaPlatform.Connection.Server.Base;
 
 public class Options
 {

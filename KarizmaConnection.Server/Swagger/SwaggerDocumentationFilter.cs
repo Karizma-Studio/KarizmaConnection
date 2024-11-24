@@ -1,9 +1,9 @@
-﻿using KarizmaConnection.Server.Extensions;
-using KarizmaConnection.Server.RequestHandler;
+﻿using KarizmaPlatform.Connection.Server.Extensions;
+using KarizmaPlatform.Connection.Server.RequestHandler;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace KarizmaConnection.Server.Swagger;
+namespace KarizmaPlatform.Connection.Server.Swagger;
 
 internal class SwaggerDocumentationFilter() : IDocumentFilter
 {

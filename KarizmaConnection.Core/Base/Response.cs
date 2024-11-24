@@ -1,4 +1,4 @@
-namespace KarizmaConnection.Core.Base
+namespace KarizmaPlatform.Connection.Core.Base
 {
     public class Response<TResult>
     {

@@ -1,6 +1,6 @@
-using KarizmaConnection.Core.Base;
+using KarizmaPlatform.Connection.Core.Base;
 
-namespace KarizmaConnection.Server.Connection;
+namespace KarizmaPlatform.Connection.Server.Connection;
 
 public class ConnectionContext(string connectionId)
 {

@@ -1,4 +1,4 @@
-namespace KarizmaConnection.Server.Attributes;
+namespace KarizmaPlatform.Connection.Server.Attributes;
 
 [AttributeUsage(AttributeTargets.Class, Inherited = false)]
 public class EventHandlerAttribute : Attribute

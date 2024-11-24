@@ -1,7 +1,7 @@
-using KarizmaConnection.Server.Swagger;
+using KarizmaPlatform.Connection.Server.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace KarizmaConnection.Server.Extensions;
+namespace KarizmaPlatform.Connection.Server.Extensions;
 
 public static class SwaggerGenOptionsExtensions
 {

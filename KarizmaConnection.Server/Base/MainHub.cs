@@ -1,14 +1,14 @@
 using System.Text.Json;
-using KarizmaConnection.Core.Base;
-using KarizmaConnection.Core.Constants;
-using KarizmaConnection.Core.Exceptions;
-using KarizmaConnection.Server.Connection;
-using KarizmaConnection.Server.Extensions;
-using KarizmaConnection.Server.Interfaces;
-using KarizmaConnection.Server.RequestHandler;
+using KarizmaPlatform.Connection.Core.Base;
+using KarizmaPlatform.Connection.Core.Constants;
+using KarizmaPlatform.Connection.Core.Exceptions;
+using KarizmaPlatform.Connection.Server.Connection;
+using KarizmaPlatform.Connection.Server.Extensions;
+using KarizmaPlatform.Connection.Server.Interfaces;
+using KarizmaPlatform.Connection.Server.RequestHandler;
 using Microsoft.AspNetCore.SignalR;
 
-namespace KarizmaConnection.Server.Base;
+namespace KarizmaPlatform.Connection.Server.Base;
 
 internal class MainHub(
     ILogger<MainHub> logger,

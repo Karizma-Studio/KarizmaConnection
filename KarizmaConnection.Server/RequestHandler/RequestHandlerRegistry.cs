@@ -1,4 +1,4 @@
-namespace KarizmaConnection.Server.RequestHandler;
+namespace KarizmaPlatform.Connection.Server.RequestHandler;
 
 internal static class RequestHandlerRegistry
 {

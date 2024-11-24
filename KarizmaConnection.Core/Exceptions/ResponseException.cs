@@ -1,6 +1,6 @@
 using System;
 
-namespace KarizmaConnection.Core.Exceptions
+namespace KarizmaPlatform.Connection.Core.Exceptions
 {
     [Serializable]
     public class ResponseException : Exception

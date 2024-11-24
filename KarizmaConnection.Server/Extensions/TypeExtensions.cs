@@ -1,4 +1,4 @@
-namespace KarizmaConnection.Server.Extensions;
+namespace KarizmaPlatform.Connection.Server.Extensions;
 
 internal static class TypeExtensions
 {
