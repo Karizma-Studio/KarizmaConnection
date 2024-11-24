@@ -7,23 +7,17 @@
         <PackageId>KarizmaConnection.Server</PackageId>
         <IsPackable>true</IsPackable>
         <AssemblyName>KarizmaConnection.Server</AssemblyName>
-        <Version>3.2.2</Version>
+        <Version>4.0.0</Version>
         <Authors>Karizma Studio</Authors>
         <Description>Server library for KarizmaConnection.</Description>
         <PackageTags>SignalR, WebSocket, Server</PackageTags>
         <RepositoryUrl>https://github.com/Karizma-Studio/KarizmaConnection</RepositoryUrl>
         <Title>Karizma Connection Server</Title>
         <PackageIcon>logo.png</PackageIcon>
-        <PackageReleaseNotes>
-            3.2.1
-            - Fix return response exception inside another try/catch block
-            
-            3.2.0
-            - User Authorization mechanism
-            
-            3.1.0
-            - Add Swagger documentation support
-        </PackageReleaseNotes>
+        <PackageReleaseNotes>v4.0.0
+            - namespaces updated
+            - contains breaking changes
+            - version 3.x.x will be deprecated</PackageReleaseNotes>
         <RootNamespace>KarizmaPlatform.Connection.Server</RootNamespace>
     </PropertyGroup>
 

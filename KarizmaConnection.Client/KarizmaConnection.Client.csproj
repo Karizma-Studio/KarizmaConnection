@@ -6,15 +6,16 @@
         <IsPackable>true</IsPackable>
         <RootNamespace>KarizmaPlatform.Connection.Client</RootNamespace>
         <PackageId>KarizmaConnection.Client</PackageId>
-        <Version>3.0.0</Version>
+        <Version>4.0.0</Version>
         <Authors>Karizma Studio</Authors>
         <Description>Client library for KarizmaConnection.</Description>
         <PackageTags>SignalR, WebSocket, Server</PackageTags>
         <RepositoryUrl>https://github.com/Karizma-Studio/KarizmaConnection</RepositoryUrl>
         <Title>Karizma Connection Client</Title>
-        <PackageReleaseNotes>v2.1.3
-            - Minor Improvements
-        </PackageReleaseNotes>
+        <PackageReleaseNotes>v4.0.0
+            - namespaces updated
+            - contains breaking changes
+            - version 3.x.x will be deprecated</PackageReleaseNotes>
         <PackageIcon>logo.png</PackageIcon>
     </PropertyGroup>
 
