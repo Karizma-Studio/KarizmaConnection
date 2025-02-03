@@ -1,14 +1,16 @@
 using System.Text.Json;
+using KarizmaPlatform.Connection.Server.Extensions;
 using KarizmaPlatform.Connection.Core.Base;
 using KarizmaPlatform.Connection.Core.Constants;
 using KarizmaPlatform.Connection.Core.Exceptions;
+using KarizmaPlatform.Connection.Server.Base;
+using KarizmaPlatform.Connection.Server.Config;
 using KarizmaPlatform.Connection.Server.Connection;
-using KarizmaPlatform.Connection.Server.Extensions;
 using KarizmaPlatform.Connection.Server.Interfaces;
 using KarizmaPlatform.Connection.Server.RequestHandler;
 using Microsoft.AspNetCore.SignalR;
 
-namespace KarizmaPlatform.Connection.Server.Base;
+namespace KarizmaPlatform.Connection.Server.Main;
 
 internal class MainHub(
     ILogger<MainHub> logger,
@@ -89,7 +91,7 @@ internal class MainHub(
             {
                 if (innerException is ResponseException responseException)
                     return new Response<object?>(null, new Error(responseException));
-               
+
                 innerException = innerException.InnerException;
             }
 
@@ -101,5 +103,25 @@ internal class MainHub(
         }
 
         return new Response<object?>(null);
+    }
+
+    public async Task SendAll(string address, object body)
+    {
+        await Clients.All.SendAsync(address, body);
+    }
+
+    public async Task Send(string connectionId, string address, object body)
+    {
+        await Clients.Client(connectionId).SendAsync(address, body);
+    }
+
+    public ConnectionContext? GetConnection(string connectionId)
+    {
+        return ConnectionContextRegistry.GetContextWithConnectionId(connectionId);
+    }
+
+    public ConnectionContext? GetAuthorizedConnection(object authorizationId)
+    {
+        return ConnectionContextRegistry.GetContextWithAuthorizationId(authorizationId);
     }
 }

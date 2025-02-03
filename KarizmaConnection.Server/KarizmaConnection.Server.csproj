@@ -17,7 +17,8 @@
         <PackageReleaseNotes>v4.0.0
             - namespaces updated
             - contains breaking changes
-            - version 3.x.x will be deprecated</PackageReleaseNotes>
+            - version 3.x.x will be deprecated
+        </PackageReleaseNotes>
         <RootNamespace>KarizmaPlatform.Connection.Server</RootNamespace>
     </PropertyGroup>
 

@@ -1,4 +1,4 @@
-using KarizmaPlatform.Connection.Server.Base;
+using KarizmaPlatform.Connection.Server.Main;
 
 namespace KarizmaPlatform.Connection.Server.Extensions;
 

@@ -6,6 +6,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KarizmaConnection.Client", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KarizmaConnection.Core", "KarizmaConnection.Core\KarizmaConnection.Core.csproj", "{9AAF0D9E-FE51-4B75-B678-CE303F916901}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2138BEC6-FAB3-44F3-8AE0-DC95045F6AFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KarizmaConnection.Test.Server", "KarizmaConnection.Test.Server\KarizmaConnection.Test.Server.csproj", "{B52637FF-EF36-4B79-9D27-2D696BD75DCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KarizmaConnection.Test.Client", "KarizmaConnection.Test.Client\KarizmaConnection.Test.Client.csproj", "{7BA230EA-D34D-48E7-A53F-EEA2FB11365B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +30,17 @@ Global
 		{9AAF0D9E-FE51-4B75-B678-CE303F916901}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AAF0D9E-FE51-4B75-B678-CE303F916901}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AAF0D9E-FE51-4B75-B678-CE303F916901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B52637FF-EF36-4B79-9D27-2D696BD75DCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B52637FF-EF36-4B79-9D27-2D696BD75DCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B52637FF-EF36-4B79-9D27-2D696BD75DCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B52637FF-EF36-4B79-9D27-2D696BD75DCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BA230EA-D34D-48E7-A53F-EEA2FB11365B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BA230EA-D34D-48E7-A53F-EEA2FB11365B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BA230EA-D34D-48E7-A53F-EEA2FB11365B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BA230EA-D34D-48E7-A53F-EEA2FB11365B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B52637FF-EF36-4B79-9D27-2D696BD75DCD} = {2138BEC6-FAB3-44F3-8AE0-DC95045F6AFF}
+		{7BA230EA-D34D-48E7-A53F-EEA2FB11365B} = {2138BEC6-FAB3-44F3-8AE0-DC95045F6AFF}
 	EndGlobalSection
 EndGlobal

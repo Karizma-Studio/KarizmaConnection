@@ -1,37 +1,16 @@
 using KarizmaPlatform.Connection.Server.Connection;
 using KarizmaPlatform.Connection.Server.Interfaces;
-using Microsoft.AspNetCore.SignalR;
 
 namespace KarizmaPlatform.Connection.Server.Base;
 
-public abstract class BaseRequestHandler : IRequestHandler
+public abstract class BaseRequestHandler
 {
-    private Hub? hub;
+    protected IHub MainHub { get; private set; } = null!;
     public ConnectionContext ConnectionContext { get; private set; } = null!;
 
-    internal void Initialize(Hub contextHub, ConnectionContext connectionContext)
+    internal void Initialize(IHub mainHub, ConnectionContext connectionContext)
     {
-        hub = contextHub;
+        MainHub = mainHub;
         ConnectionContext = connectionContext;
-    }
-
-    public async Task SendAll(string address, object body)
-    {
-        await hub!.Clients.All.SendAsync(address, body);
-    }
-
-    public async Task Send(string connectionId, string address, object body)
-    {
-        await hub!.Clients.Client(connectionId).SendAsync(address, body);
-    }
-
-    public ConnectionContext? GetConnectionContextWithConnectionId(string connectionId)
-    {
-        return ConnectionContextRegistry.GetContextWithConnectionId(connectionId);
-    }
-
-    public ConnectionContext? GetConnectionContextWithAuthorizationId(object authorizationId)
-    {
-        return ConnectionContextRegistry.GetContextWithAuthorizationId(authorizationId);
     }
 }

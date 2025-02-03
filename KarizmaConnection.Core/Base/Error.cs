@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using KarizmaPlatform.Connection.Core.Exceptions;
 
 namespace KarizmaPlatform.Connection.Core.Base
@@ -7,6 +8,7 @@ namespace KarizmaPlatform.Connection.Core.Base
         public int Code { get; private set; }
         public string? Message { get; private set; }
 
+        [JsonConstructor]
         public Error(int code, string? message)
         {
             Code = code;
