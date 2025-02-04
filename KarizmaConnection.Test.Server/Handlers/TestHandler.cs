@@ -5,6 +5,7 @@ using KarizmaPlatform.Connection.Server.Base;
 namespace KarizmaConnection.Test.Server.Handlers;
 
 [RequestHandler("Test")]
+[CustomEventDoc("test/hello3", typeof(string), "This is my summary 3", "This is my description")]
 public class TestHandler(TestService testService) : BaseRequestHandler
 {
     [Action("GetHello", needAuthorizedUser: false)]
@@ -15,6 +16,8 @@ public class TestHandler(TestService testService) : BaseRequestHandler
     }
 
     [Action("SendHelloToAll", needAuthorizedUser: false)]
+    [CustomEventDoc("test/hello", typeof(string), "This is my summary", "This is my description")]
+    [CustomEventDoc("test/hello2", typeof(string), "This is my summary 2", "This is my description 2")]
     public async Task SendHelloToAll()
     {
         await Task.Delay(500);

@@ -1,4 +1,6 @@
-﻿using KarizmaPlatform.Connection.Server.Extensions;
+﻿using System.Reflection;
+using KarizmaPlatform.Connection.Server.Attributes;
+using KarizmaPlatform.Connection.Server.Extensions;
 using KarizmaPlatform.Connection.Server.RequestHandler;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -7,10 +9,38 @@ namespace KarizmaPlatform.Connection.Server.Swagger;
 
 internal class SwaggerDocumentationFilter : IDocumentFilter
 {
+    private static List<CustomEventDocAttribute> customEventDocs = new();
+
+    internal static void FindCustomEventDocs()
+    {
+        var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+        foreach (var assembly in assemblies)
+        {
+            var types = assembly.GetTypes();
+
+            foreach (var type in types)
+            {
+                var typeAttributes = type.GetCustomAttributes<CustomEventDocAttribute>();
+                foreach (var typeAttribute in typeAttributes)
+                    customEventDocs.Add(typeAttribute);
+
+                var methods = type.GetMethods();
+
+                foreach (var method in methods)
+                {
+                    var methodAttributes = method.GetCustomAttributes<CustomEventDocAttribute>();
+                    foreach (var methodAttribute in methodAttributes)
+                        customEventDocs.Add(methodAttribute);
+                }
+            }
+        }
+    }
+
     public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
     {
+        // Add handler actions
         var handlerActions = RequestHandlerRegistry.GetAllHandlerActions;
-
         foreach (var handlerAction in handlerActions)
         {
             var actionMethodInfo = handlerAction.ActionMethodInfo;
@@ -86,6 +116,46 @@ internal class SwaggerDocumentationFilter : IDocumentFilter
             swaggerDoc.Paths.Add(handlerAction.Address, new OpenApiPathItem
             {
                 Operations = { [OperationType.Get] = operation }
+            });
+        }
+
+        //Add custom events
+        foreach (var customEventDoc in customEventDocs)
+        {
+            swaggerDoc.Paths.Add(customEventDoc.Address, new OpenApiPathItem
+            {
+                Operations =
+                {
+                    [OperationType.Trace] = new OpenApiOperation
+                    {
+                        Summary = customEventDoc.Summary,
+                        Description =
+                            $"<p><b>Description: </p></b>{customEventDoc.Description ?? "No description"}<p><b>Output Type:</p></b> {customEventDoc.OutputType.FullName}",
+                        Tags = new List<OpenApiTag>
+                        {
+                            new()
+                            {
+                                Name = "Custom Events"
+                            }
+                        },
+                        Responses = new OpenApiResponses
+                        {
+                            ["200"] = new()
+                            {
+                                Description = "OK",
+                                Content = new Dictionary<string, OpenApiMediaType>
+                                {
+                                    [customEventDoc.OutputType.Name] = new()
+                                    {
+                                        Schema =
+                                            context.SchemaGenerator
+                                                .GenerateSchema(customEventDoc.OutputType, context.SchemaRepository)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             });
         }
     }

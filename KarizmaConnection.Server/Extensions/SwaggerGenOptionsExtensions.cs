@@ -7,6 +7,7 @@ public static class SwaggerGenOptionsExtensions
 {
     public static void AddKarizmaConnectionSwaggerDocs(this SwaggerGenOptions options)
     {
+        SwaggerDocumentationFilter.FindCustomEventDocs();
         options.DocumentFilter<SwaggerDocumentationFilter>();
     }
 }
