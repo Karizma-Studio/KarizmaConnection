@@ -5,7 +5,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace KarizmaPlatform.Connection.Server.Swagger;
 
-internal class SwaggerDocumentationFilter() : IDocumentFilter
+internal class SwaggerDocumentationFilter : IDocumentFilter
 {
     public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
     {
