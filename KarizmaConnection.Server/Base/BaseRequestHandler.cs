@@ -1,14 +1,13 @@
-using KarizmaPlatform.Connection.Server.Connection;
 using KarizmaPlatform.Connection.Server.Interfaces;
 
 namespace KarizmaPlatform.Connection.Server.Base;
 
 public abstract class BaseRequestHandler
 {
-    protected IHub MainHub { get; private set; } = null!;
-    public ConnectionContext ConnectionContext { get; private set; } = null!;
+    protected IMainHubContext MainHub { get; private set; } = null!;
+    protected IConnectionContext ConnectionContext { get; private set; } = null!;
 
-    internal void Initialize(IHub mainHub, ConnectionContext connectionContext)
+    internal void Initialize(IMainHubContext mainHub, IConnectionContext connectionContext)
     {
         MainHub = mainHub;
         ConnectionContext = connectionContext;

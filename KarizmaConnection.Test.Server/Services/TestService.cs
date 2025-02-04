@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace KarizmaConnection.Test.Server.Services;
 
-public class TestService(ILogger<TestService> logger, IHub hub)
+public class TestService(ILogger<TestService> logger, IMainHubContext mainHub)
 {
-    public async Task NotifyUser(ConnectionContext connection)
+    public async Task NotifyUser(IConnectionContext connection)
     {
         logger.LogInformation($"Calling {connection.ConnectionId} ...");
-        await hub.Send(connection.ConnectionId, "Hello", "Hello from server - TestService!");
+        await mainHub.Send(connection.ConnectionId, "Hello", "Hello from server - TestService!");
     }
 }

@@ -3,7 +3,7 @@ using KarizmaPlatform.Connection.Server.Attributes;
 using KarizmaPlatform.Connection.Server.Base;
 using KarizmaPlatform.Connection.Server.Config;
 using KarizmaPlatform.Connection.Server.Interfaces;
-using KarizmaPlatform.Connection.Server.Main;
+using KarizmaPlatform.Connection.Server.MainHub;
 using KarizmaPlatform.Connection.Server.RequestHandler;
 
 namespace KarizmaPlatform.Connection.Server.Extensions;
@@ -11,15 +11,16 @@ namespace KarizmaPlatform.Connection.Server.Extensions;
 public static class ServiceCollectionExtensions
 {
     public static void AddKarizmaConnection(this IServiceCollection services,
-        Options? hubOptions = null)
+        MainHubOptions? hubOptions = null)
     {
         services.AddSignalR();
 
         services.AddEventHandlers();
         services.AddRequestHandlers();
 
-        hubOptions ??= new Options();
+        hubOptions ??= new MainHubOptions();
         services.AddSingleton(hubOptions);
+        services.AddSingleton<IMainHubContext, MainHubContext>();
     }
 
     private static void AddRequestHandlers(this IServiceCollection services)

@@ -5,7 +5,7 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddKarizmaConnection(new Options
+builder.Services.AddKarizmaConnection(new MainHubOptions
 {
     DefaultHubResponseErrorCode = 500,
     ReturnStackTraceOnError = false

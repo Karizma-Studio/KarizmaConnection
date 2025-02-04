@@ -1,13 +1,15 @@
 using KarizmaPlatform.Connection.Core.Base;
+using KarizmaPlatform.Connection.Server.Interfaces;
 
 namespace KarizmaPlatform.Connection.Server.Connection;
 
-public class ConnectionContext(string connectionId)
+internal class ConnectionContext(string connectionId) : IConnectionContext
 {
     public string ConnectionId => connectionId;
-    private object? authorizationId;
     public bool IsAuthorized => authorizationId != null;
-    public readonly Vault Vault = new();
+    public Vault Vault { get; } = new();
+
+    private object? authorizationId;
 
     public void SetAuthorizationId(object authId)
     {

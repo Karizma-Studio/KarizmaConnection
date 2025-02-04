@@ -1,22 +1,23 @@
 using System.Text.Json;
-using KarizmaPlatform.Connection.Server.Extensions;
 using KarizmaPlatform.Connection.Core.Base;
 using KarizmaPlatform.Connection.Core.Constants;
 using KarizmaPlatform.Connection.Core.Exceptions;
 using KarizmaPlatform.Connection.Server.Base;
 using KarizmaPlatform.Connection.Server.Config;
 using KarizmaPlatform.Connection.Server.Connection;
+using KarizmaPlatform.Connection.Server.Extensions;
 using KarizmaPlatform.Connection.Server.Interfaces;
 using KarizmaPlatform.Connection.Server.RequestHandler;
 using Microsoft.AspNetCore.SignalR;
 
-namespace KarizmaPlatform.Connection.Server.Main;
+namespace KarizmaPlatform.Connection.Server.MainHub;
 
 internal class MainHub(
     ILogger<MainHub> logger,
-    Options options,
+    MainHubOptions mainHubOptions,
     IEnumerable<BaseEventHandler> eventHandlers,
-    IServiceProvider serviceProvider) : Hub, IHub
+    IMainHubContext mainHubContext,
+    IServiceProvider serviceProvider) : Hub, IMainHub
 {
     public override async Task OnConnectedAsync()
     {
@@ -25,7 +26,7 @@ internal class MainHub(
 
         foreach (var handler in eventHandlers)
         {
-            handler.Initialize(this, connectionContext);
+            handler.Initialize(mainHubContext, connectionContext);
             await handler.OnConnected();
         }
 
@@ -38,7 +39,7 @@ internal class MainHub(
 
         foreach (var handler in eventHandlers)
         {
-            handler.Initialize(this, connectionContext!);
+            handler.Initialize(mainHubContext, connectionContext!);
             await handler.OnDisconnected(exception);
         }
 
@@ -61,7 +62,7 @@ internal class MainHub(
 
             //Get Handler instance and set context
             var handlerInstance = serviceProvider.GetRequiredService(handlerAction.HandlerType);
-            ((BaseRequestHandler)handlerInstance).Initialize(this, user);
+            ((BaseRequestHandler)handlerInstance).Initialize(mainHubContext, user);
 
             //Initialize action input parameters
             List<object?> actionInputParams = [];
@@ -95,33 +96,13 @@ internal class MainHub(
                 innerException = innerException.InnerException;
             }
 
-            var message = options.ReturnStackTraceOnError
+            var message = mainHubOptions.ReturnStackTraceOnError
                 ? $"{ex.Message} \n {ex.StackTrace}"
                 : "Internal Server Error";
 
-            return new Response<object?>(null, new Error(options.DefaultHubResponseErrorCode, message));
+            return new Response<object?>(null, new Error(mainHubOptions.DefaultHubResponseErrorCode, message));
         }
 
         return new Response<object?>(null);
-    }
-
-    public async Task SendAll(string address, object body)
-    {
-        await Clients.All.SendAsync(address, body);
-    }
-
-    public async Task Send(string connectionId, string address, object body)
-    {
-        await Clients.Client(connectionId).SendAsync(address, body);
-    }
-
-    public ConnectionContext? GetConnection(string connectionId)
-    {
-        return ConnectionContextRegistry.GetContextWithConnectionId(connectionId);
-    }
-
-    public ConnectionContext? GetAuthorizedConnection(object authorizationId)
-    {
-        return ConnectionContextRegistry.GetContextWithAuthorizationId(authorizationId);
     }
 }

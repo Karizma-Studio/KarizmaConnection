@@ -1,11 +1,13 @@
+using KarizmaPlatform.Connection.Server.Interfaces;
+
 namespace KarizmaPlatform.Connection.Server.Connection;
 
 internal static class ConnectionContextRegistry
 {
-    private static readonly Dictionary<string, ConnectionContext> ConnectionIdMap = new();
+    private static readonly Dictionary<string, IConnectionContext> ConnectionIdMap = new();
     private static readonly Dictionary<object, string> AuthorizationIdMap = new();
 
-    internal static void AddConnectionId(ConnectionContext connectionContext)
+    internal static void AddConnectionId(IConnectionContext connectionContext)
     {
         ConnectionIdMap.Add(connectionContext.ConnectionId, connectionContext);
     }
@@ -27,12 +29,12 @@ internal static class ConnectionContextRegistry
         ConnectionIdMap.Remove(connectionId);
     }
 
-    internal static ConnectionContext? GetContextWithConnectionId(string connectionId)
+    internal static IConnectionContext? GetContextWithConnectionId(string connectionId)
     {
         return ConnectionIdMap.GetValueOrDefault(connectionId);
     }
 
-    internal static ConnectionContext? GetContextWithAuthorizationId(object authorizationId)
+    internal static IConnectionContext? GetContextWithAuthorizationId(object authorizationId)
     {
         var connectionId = AuthorizationIdMap.GetValueOrDefault(authorizationId);
         return connectionId == null ? null : ConnectionIdMap.GetValueOrDefault(connectionId);
