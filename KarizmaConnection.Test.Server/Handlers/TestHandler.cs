@@ -18,7 +18,7 @@ public class TestHandler(TestService testService) : BaseRequestHandler
     [Action("SendHelloToAll", needAuthorizedUser: false)]
     [CustomEventDoc("test/hello", typeof(string), "This is my summary", "This is my description")]
     [CustomEventDoc("test/hello2", typeof(string), "This is my summary 2", "This is my description 2")]
-    public async Task SendHelloToAll()
+    private async Task SendHelloToAll()
     {
         await Task.Delay(500);
         await MainHub.SendAll("Hello", "Hello from server");

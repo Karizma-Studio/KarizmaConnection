@@ -25,7 +25,7 @@ internal class SwaggerDocumentationFilter : IDocumentFilter
                 foreach (var typeAttribute in typeAttributes)
                     customEventDocs.Add(typeAttribute);
 
-                var methods = type.GetMethods();
+                var methods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
 
                 foreach (var method in methods)
                 {

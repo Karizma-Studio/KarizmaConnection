@@ -1,6 +1,6 @@
 namespace KarizmaPlatform.Connection.Server.Attributes;
 
-[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
+[AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = false)]
 public class CustomEventDocAttribute(
     string address,
     Type outputType,
