@@ -7,7 +7,7 @@
         <PackageId>KarizmaConnection.Server</PackageId>
         <IsPackable>true</IsPackable>
         <AssemblyName>KarizmaConnection.Server</AssemblyName>
-        <Version>5.3.0</Version>
+        <Version>5.3.1</Version>
         <Authors>Karizma Studio</Authors>
         <Description>Server library for KarizmaConnection.</Description>
         <PackageTags>SignalR, WebSocket, Server</PackageTags>
@@ -21,7 +21,8 @@
             v5.2.0
             - Add support for custom event documents in swagger
 
-        </PackageReleaseNotes>
+   v5.3.0
+        - Reset Json convertor to default </PackageReleaseNotes>
         <RootNamespace>KarizmaPlatform.Connection.Server</RootNamespace>
     </PropertyGroup>
 
