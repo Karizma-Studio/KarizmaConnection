@@ -13,7 +13,8 @@ public static class ServiceCollectionExtensions
     public static void AddKarizmaConnection(this IServiceCollection services,
         MainHubOptions? hubOptions = null)
     {
-        services.AddSignalR();
+        services.AddSignalR()
+            .AddJsonProtocol(options => { options.PayloadSerializerOptions.PropertyNamingPolicy = null; });
 
         services.AddEventHandlers();
         services.AddRequestHandlers();
@@ -38,7 +39,8 @@ public static class ServiceCollectionExtensions
 
                 var handlerAttribute = handlerType.GetCustomAttribute<RequestHandlerAttribute>();
 
-                var methodsWithActions = handlerType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
+                var methodsWithActions = handlerType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic |
+                                                                BindingFlags.Instance | BindingFlags.Static)
                     .Where(m => m.GetCustomAttribute<ActionAttribute>() != null);
 
                 foreach (var method in methodsWithActions)
@@ -53,7 +55,7 @@ public static class ServiceCollectionExtensions
             }
         }
     }
-    
+
     private static void AddEventHandlers(this IServiceCollection services)
     {
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();

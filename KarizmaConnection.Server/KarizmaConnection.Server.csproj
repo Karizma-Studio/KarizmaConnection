@@ -7,7 +7,7 @@
         <PackageId>KarizmaConnection.Server</PackageId>
         <IsPackable>true</IsPackable>
         <AssemblyName>KarizmaConnection.Server</AssemblyName>
-        <Version>5.2.0</Version>
+        <Version>5.3.0</Version>
         <Authors>Karizma Studio</Authors>
         <Description>Server library for KarizmaConnection.</Description>
         <PackageTags>SignalR, WebSocket, Server</PackageTags>
@@ -18,8 +18,8 @@
             - Add support for injecting IMainHubContext in DI and use MainHub functionality in services
             - Improve structure
 
-v5.2.0
-    - Add support for custom event documents in swagger
+            v5.2.0
+            - Add support for custom event documents in swagger
 
         </PackageReleaseNotes>
         <RootNamespace>KarizmaPlatform.Connection.Server</RootNamespace>
