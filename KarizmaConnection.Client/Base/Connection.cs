@@ -121,5 +121,11 @@ namespace KarizmaPlatform.Connection.Client.Base
             return JsonSerializer.Deserialize<Response<TResponse>>(result.GetRawText(),
                 JsonSerializerConstants.JsonSerializerOptions)!;
         }
+        
+        public async Task<Response<object?>> Request(string address, params object[]? body)
+        {
+            await CheckConnection();
+            return await Request<object?>(address, body);
+        }
     }
 }
