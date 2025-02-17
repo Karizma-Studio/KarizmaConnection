@@ -20,5 +20,6 @@ namespace KarizmaPlatform.Connection.Client.Interfaces
 
         public Task Send(string address, params object[] body);
         public Task<Response<TResponse>> Request<TResponse>(string address, params object[] body);
+        public Task<Response<object?>> Request(string address, params object[] body);
     }
 }
