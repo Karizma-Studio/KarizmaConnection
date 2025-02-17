@@ -1,4 +1,5 @@
 using KarizmaConnection.Test.Server.Services;
+using KarizmaPlatform.Connection.Core.Exceptions;
 using KarizmaPlatform.Connection.Server.Attributes;
 using KarizmaPlatform.Connection.Server.Base;
 
@@ -29,5 +30,13 @@ public class TestHandler(TestService testService) : BaseRequestHandler
     {
         await Task.Delay(500);
         await testService.NotifyUser(ConnectionContext);
+    }
+    
+    
+    [Action("Error", needAuthorizedUser: false)]
+    public async Task<bool> Error()
+    {
+        await Task.Delay(500);
+        throw new ResponseException(401, "this is my custom error message.");
     }
 }

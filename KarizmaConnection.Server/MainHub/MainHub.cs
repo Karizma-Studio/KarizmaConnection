@@ -87,7 +87,7 @@ internal class MainHub(
         {
             logger.LogCritical(ex, "MainHub HandleAction Error.");
 
-            var innerException = ex.InnerException;
+            var innerException = ex;
             while (innerException != null)
             {
                 if (innerException is ResponseException responseException)

@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Text.Json;
 using KarizmaPlatform.Connection.Client.Base;
 
 Console.WriteLine("Connecting ...");
@@ -19,3 +20,8 @@ await connection.Send("Test/SendHelloToAll");
 
 Console.WriteLine("Sending Request ....");
 await connection.Send("Test/NotifyMe");
+
+
+Console.WriteLine("Sending Error Request ...."); 
+var errResp = await connection.Request<bool?>("Test/Error");
+Console.WriteLine(JsonSerializer.SerializeToNode(errResp).ToJsonString());
