@@ -17,6 +17,7 @@ namespace KarizmaPlatform.Connection.Client.Interfaces
         public Task Disconnect();
 
         public void On<T>(string address, Action<T> handler);
+        public void Off(string address);
 
         public Task Send(string address, params object[] body);
         public Task<Response<TResponse>> Request<TResponse>(string address, params object[] body);

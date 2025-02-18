@@ -108,6 +108,11 @@ namespace KarizmaPlatform.Connection.Client.Base
             hubConnection?.On(address, handler);
         }
 
+        public void Off(string address)
+        {
+            hubConnection?.Remove(address);
+        }
+
         public async Task Send(string address, params object[] body)
         {
             await CheckConnection();
