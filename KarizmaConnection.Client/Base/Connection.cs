@@ -30,14 +30,14 @@ namespace KarizmaPlatform.Connection.Client.Base
             this.logger = logger;
         }
 
-        public async Task Connect(string url)
+        public async Task Connect(string url, bool withAutomaticReconnect = false)
         {
             if (hubConnection != null)
                 await hubConnection.DisposeAsync();
 
             logger?.LogInformation($"Start connecting to: {url}");
 
-            hubConnection = CreateHubConnection(url);
+            hubConnection = CreateHubConnection(url, withAutomaticReconnect);
 
             await hubConnection!.StartAsync();
 
@@ -47,11 +47,13 @@ namespace KarizmaPlatform.Connection.Client.Base
             logger?.LogInformation("Connection established.");
         }
 
-        private HubConnection CreateHubConnection(string address)
+        private HubConnection CreateHubConnection(string address, bool withAutomaticReconnect = false)
         {
             var connectionBuilder = new HubConnectionBuilder()
-                .WithUrl(address)
-                .WithAutomaticReconnect();
+                .WithUrl(address);
+
+            if (withAutomaticReconnect)
+                connectionBuilder = connectionBuilder.WithAutomaticReconnect();
 
             var connection = connectionBuilder.Build();
 
@@ -126,7 +128,7 @@ namespace KarizmaPlatform.Connection.Client.Base
             return JsonSerializer.Deserialize<Response<TResponse>>(result.GetRawText(),
                 JsonSerializerConstants.JsonSerializerOptions)!;
         }
-        
+
         public async Task<Response<object?>> Request(string address, params object[]? body)
         {
             await CheckConnection();

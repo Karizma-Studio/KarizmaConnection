@@ -22,6 +22,6 @@ Console.WriteLine("Sending Request ....");
 await connection.Send("Test/NotifyMe");
 
 
-Console.WriteLine("Sending Error Request ...."); 
+Console.WriteLine("Sending Error Request ....");
 var errResp = await connection.Request("Test/Error");
 Console.WriteLine(JsonSerializer.SerializeToNode(errResp).ToJsonString());

@@ -13,7 +13,7 @@ namespace KarizmaPlatform.Connection.Client.Interfaces
         public event Action<Exception?> OnReconnecting;
         public event Action<Exception?> OnDisconnected;
 
-        public Task Connect(string url);
+        public Task Connect(string url, bool withAutomaticReconnect = false);
         public Task Disconnect();
 
         public void On<T>(string address, Action<T> handler);

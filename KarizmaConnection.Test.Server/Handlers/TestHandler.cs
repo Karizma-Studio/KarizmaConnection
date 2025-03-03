@@ -31,8 +31,8 @@ public class TestHandler(TestService testService) : BaseRequestHandler
         await Task.Delay(500);
         await testService.NotifyUser(ConnectionContext);
     }
-    
-    
+
+
     [Action("Error", needAuthorizedUser: false)]
     public async Task<bool> Error()
     {

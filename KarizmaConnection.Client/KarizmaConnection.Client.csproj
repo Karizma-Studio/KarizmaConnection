@@ -6,7 +6,7 @@
         <IsPackable>true</IsPackable>
         <RootNamespace>KarizmaPlatform.Connection.Client</RootNamespace>
         <PackageId>KarizmaConnection.Client</PackageId>
-        <Version>4.1.0</Version>
+        <Version>4.2.0</Version>
         <Authors>Karizma Studio</Authors>
         <Description>Client library for KarizmaConnection.</Description>
         <PackageTags>SignalR, WebSocket, Server</PackageTags>
