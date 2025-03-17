@@ -21,7 +21,7 @@ internal class MainHub(
 {
     public override async Task OnConnectedAsync()
     {
-        var connectionContext = new ConnectionContext(Context.ConnectionId);
+        var connectionContext = new ConnectionContext(Context);
         ConnectionContextRegistry.AddConnectionId(connectionContext);
 
         foreach (var handler in eventHandlers)
