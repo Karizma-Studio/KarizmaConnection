@@ -55,10 +55,14 @@ internal class MainHub(
             if (!RequestHandlerRegistry.TryGetHandler(address, out var handlerAction))
                 throw new KeyNotFoundException($"Address '{address}' not found.");
 
-            //Check user authorization
+            //Check user existence and authorization
             var user = ConnectionContextRegistry.GetContextWithConnectionId(Context.ConnectionId);
-            if (user == null || handlerAction.NeedAuthorizedUser && !user.IsAuthorized)
-                throw new Exception("Access denied.");
+
+            if (user == null)
+                throw new Exception("User is null - Connection ID: " + Context.ConnectionId);
+
+            if (handlerAction.NeedAuthorizedUser && !user.IsAuthorized)
+                throw new Exception("User is not authorized for this handler - Address: " + address);
 
             //Get Handler instance and set context
             var handlerInstance = serviceProvider.GetRequiredService(handlerAction.HandlerType);
@@ -85,13 +89,14 @@ internal class MainHub(
         }
         catch (Exception ex)
         {
-            logger.LogCritical(ex, "MainHub HandleAction Error.");
-
             var innerException = ex;
             while (innerException != null)
             {
                 if (innerException is ResponseException responseException)
+                {
+                    logger.LogWarning(ex, "[MainHub | HandleAction] Got Response Exception.");
                     return new Response<object?>(null, new Error(responseException));
+                }
 
                 innerException = innerException.InnerException;
             }
@@ -100,6 +105,7 @@ internal class MainHub(
                 ? $"{ex.Message} \n {ex.StackTrace}"
                 : "Internal Server Error";
 
+            logger.LogCritical(ex, "[MainHub | HandleAction] Got Unhandled Exception.");
             return new Response<object?>(null, new Error(mainHubOptions.DefaultHubResponseErrorCode, message));
         }
 
