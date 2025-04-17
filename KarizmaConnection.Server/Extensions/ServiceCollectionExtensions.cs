@@ -13,13 +13,22 @@ public static class ServiceCollectionExtensions
     public static void AddKarizmaConnection(this IServiceCollection services,
         MainHubOptions? hubOptions = null)
     {
-        services.AddSignalR()
-            .AddJsonProtocol(options => { options.PayloadSerializerOptions.PropertyNamingPolicy = null; });
+        hubOptions ??= new MainHubOptions();
+
+        services
+            .AddSignalR(options =>
+            {
+                options.KeepAliveInterval = hubOptions.KeepAliveInterval;
+                options.ClientTimeoutInterval = hubOptions.ClientTimeoutInterval;
+            })
+            .AddJsonProtocol(options =>
+            {
+                options.PayloadSerializerOptions.PropertyNamingPolicy = null;
+            });
 
         services.AddEventHandlers();
         services.AddRequestHandlers();
 
-        hubOptions ??= new MainHubOptions();
         services.AddSingleton(hubOptions);
         services.AddSingleton<IMainHubContext, MainHubContext>();
     }
