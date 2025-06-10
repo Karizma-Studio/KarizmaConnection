@@ -35,18 +35,40 @@ internal class MainHub(
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        var connectionContext = ConnectionContextRegistry.GetContextWithConnectionId(Context.ConnectionId);
-
-        foreach (var handler in eventHandlers)
+        try
         {
-            handler.Initialize(mainHubContext, connectionContext!);
-            await handler.OnDisconnected(exception);
-        }
+            var connectionContext = ConnectionContextRegistry.GetContextWithConnectionId(Context.ConnectionId);
+            logger.LogInformation($"[MainHub | OnDisconnectedAsync | {connectionContext!.ConnectionId}] Connection being disconnected.");
 
-        await base.OnDisconnectedAsync(exception);
-        
-        ConnectionContextRegistry.RemoveConnectionId(Context.ConnectionId);
-        ConnectionContextRegistry.TriggerDisconnectionSource(Context.ConnectionId);
+            foreach (var handler in eventHandlers)
+            {
+                try
+                {
+                    logger.LogInformation($"[MainHub | OnDisconnectedAsync | Handler | {connectionContext!.ConnectionId}] Handling event ...");
+                    handler.Initialize(mainHubContext, connectionContext!);
+                    await handler.OnDisconnected(exception);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogCritical(ex, $"[MainHub | OnDisconnectedAsync | Handler | {connectionContext!.ConnectionId}] Got Unhandled Exception.");
+                }
+            }
+
+            logger.LogInformation($"[MainHub | OnDisconnectedAsync | {connectionContext!.ConnectionId}] Handling events done.");
+
+            await base.OnDisconnectedAsync(exception);
+            
+            logger.LogInformation($"[MainHub | OnDisconnectedAsync | {connectionContext!.ConnectionId}] Base OnDisconnectedAsync completed.");
+        }
+        catch (Exception ex)
+        {
+            logger.LogCritical(ex, "[MainHub | OnDisconnectedAsync | Base] Got Unhandled Exception.");
+        }
+        finally
+        {
+            ConnectionContextRegistry.RemoveConnectionId(Context.ConnectionId);
+            ConnectionContextRegistry.TriggerDisconnectionSource(Context.ConnectionId);
+        }
     }
 
     public async Task<Response<object?>> HandleAction(string address, params JsonElement[] body)

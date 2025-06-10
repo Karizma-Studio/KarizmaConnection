@@ -44,11 +44,10 @@ internal static class ConnectionContextRegistry
 
     internal static TaskCompletionSource AddDisconnectionSource(string connectionId)
     {
-        var tcs = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-        DisconnectTasks[connectionId] = tcs;
-        return tcs;
+        var newTcs = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        return DisconnectTasks.GetOrAdd(connectionId, newTcs);
     }
-
+    
     internal static void TriggerDisconnectionSource(string connectionId)
     {
         if (DisconnectTasks.TryRemove(connectionId, out var tcs))
