@@ -21,10 +21,7 @@ public static class ServiceCollectionExtensions
                 options.KeepAliveInterval = hubOptions.KeepAliveInterval;
                 options.ClientTimeoutInterval = hubOptions.ClientTimeoutInterval;
             })
-            .AddJsonProtocol(options =>
-            {
-                options.PayloadSerializerOptions.PropertyNamingPolicy = null;
-            });
+            .AddJsonProtocol(options => { options.PayloadSerializerOptions.PropertyNamingPolicy = null; });
 
         services.AddEventHandlers();
         services.AddRequestHandlers();

@@ -9,5 +9,5 @@ public interface IConnectionContext
     public Vault Vault { get; }
     public void SetAuthorizationId(object authId);
     public T? GetAuthorizationId<T>();
-    public void Disconnect();
+    public Task Disconnect();
 }

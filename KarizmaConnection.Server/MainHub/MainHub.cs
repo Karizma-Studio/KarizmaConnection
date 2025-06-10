@@ -43,9 +43,10 @@ internal class MainHub(
             await handler.OnDisconnected(exception);
         }
 
-        ConnectionContextRegistry.RemoveConnectionId(Context.ConnectionId);
-
         await base.OnDisconnectedAsync(exception);
+        
+        ConnectionContextRegistry.RemoveConnectionId(Context.ConnectionId);
+        ConnectionContextRegistry.TriggerDisconnectionSource(Context.ConnectionId);
     }
 
     public async Task<Response<object?>> HandleAction(string address, params JsonElement[] body)

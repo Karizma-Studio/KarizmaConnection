@@ -26,8 +26,24 @@ internal class ConnectionContext(HubCallerContext context) : IConnectionContext
         return (T)authorizationId!;
     }
 
-    public void Disconnect()
+    public Task Disconnect()
     {
+        // Task that completes when ConnectionAborted is triggered
+        var tokenTcs = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        if (context.ConnectionAborted.IsCancellationRequested)
+            tokenTcs.SetResult();
+        else
+            context.ConnectionAborted.Register(() => tokenTcs.TrySetResult());
+
+        // Task that completes when OnDisconnectedAsync finishes
+        var disconnectTcs = ConnectionContextRegistry.AddDisconnectionSource(ConnectionId);
+
+        // Trigger the abort
         context.Abort();
+
+        // Return a combined Task that waits for both token and OnDisconnectedAsync
+        return Task.WhenAll(tokenTcs.Task, disconnectTcs.Task);
     }
+
 }

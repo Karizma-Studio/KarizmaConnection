@@ -7,6 +7,7 @@ internal static class ConnectionContextRegistry
 {
     private static readonly ConcurrentDictionary<string, IConnectionContext> ConnectionIdMap = new();
     private static readonly ConcurrentDictionary<object, string> AuthorizationIdMap = new();
+    private static readonly ConcurrentDictionary<string, TaskCompletionSource> DisconnectTasks = new();
 
     internal static void AddConnectionId(IConnectionContext connectionContext)
     {
@@ -39,5 +40,18 @@ internal static class ConnectionContextRegistry
     {
         var connectionId = AuthorizationIdMap.GetValueOrDefault(authorizationId);
         return connectionId == null ? null : ConnectionIdMap.GetValueOrDefault(connectionId);
+    }
+
+    internal static TaskCompletionSource AddDisconnectionSource(string connectionId)
+    {
+        var tcs = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        DisconnectTasks[connectionId] = tcs;
+        return tcs;
+    }
+
+    internal static void TriggerDisconnectionSource(string connectionId)
+    {
+        if (DisconnectTasks.TryRemove(connectionId, out var tcs))
+            tcs.SetResult();
     }
 }
