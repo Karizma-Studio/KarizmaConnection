@@ -39,4 +39,28 @@ public class TestHandler(TestService testService) : BaseRequestHandler
         await Task.Delay(500);
         throw new ResponseException(401, "this is my custom error message.");
     }
+
+
+    [Action("Authorize", needAuthorizedUser: false)]
+    public async Task Authorize()
+    {
+        await Task.Delay(500);
+
+        var oldContext = MainHub.GetAuthorizedConnection(12);
+        if (oldContext != null)
+            await oldContext.Disconnect();
+
+        ConnectionContext.SetAuthorizationId(12);
+
+
+        Console.WriteLine("Authorized=>" + ConnectionContext.ConnectionId);
+        Console.WriteLine("Authorized Id=>" + MainHub.GetAuthorizedConnection(12)!.ConnectionId);
+    }
+
+    [Action("GetMyConnectionId")]
+    public async Task<string> GetMyConnectionId()
+    {
+        await Task.Delay(500);
+        return ConnectionContext.ConnectionId;
+    }
 }
