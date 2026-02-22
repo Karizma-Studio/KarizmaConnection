@@ -82,10 +82,10 @@ internal class MainHub(
             var user = ConnectionContextRegistry.GetContextWithConnectionId(Context.ConnectionId);
 
             if (user == null)
-                throw new Exception("User is null - Connection ID: " + Context.ConnectionId);
+                throw new AccessViolationException("User is null - Connection ID: " + Context.ConnectionId);
 
             if (handlerAction.NeedAuthorizedUser && !user.IsAuthorized)
-                throw new Exception("User is not authorized for this handler - Address: " + address);
+                throw new UnauthorizedAccessException("User is not authorized for this handler - Address: " + address);
 
             //Get Handler instance and set context
             var handlerInstance = serviceProvider.GetRequiredService(handlerAction.HandlerType);
@@ -112,6 +112,22 @@ internal class MainHub(
         }
         catch (Exception ex)
         {
+            var message = mainHubOptions.ReturnStackTraceOnError
+                ? $"{ex.Message} \n {ex.StackTrace}"
+                : "Internal Server Error";
+            
+            if (ex is AccessViolationException)
+            {
+                logger.LogWarning(ex, "[MainHub | HandleAction] Received message from a connection without a User.");
+                return new Response<object?>(null, new Error(mainHubOptions.DefaultHubResponseErrorCode, message));
+            }
+            
+            if (ex is UnauthorizedAccessException)
+            {
+                logger.LogWarning(ex, "[MainHub | HandleAction] User requests a protected handler without authorization.");
+                return new Response<object?>(null, new Error(mainHubOptions.DefaultHubResponseErrorCode, message));
+            }
+            
             var innerException = ex;
             while (innerException != null)
             {
@@ -123,10 +139,6 @@ internal class MainHub(
 
                 innerException = innerException.InnerException;
             }
-
-            var message = mainHubOptions.ReturnStackTraceOnError
-                ? $"{ex.Message} \n {ex.StackTrace}"
-                : "Internal Server Error";
 
             logger.LogCritical(ex, "[MainHub | HandleAction] Got Unhandled Exception.");
             return new Response<object?>(null, new Error(mainHubOptions.DefaultHubResponseErrorCode, message));
